@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login & Register | OneSeva India</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f1f5fb;
+    color: #172033;
+    min-height: 100vh;
+}
+
+.header {
+    background: white;
+    padding: 18px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.header-inner {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.logo {
+    color: #0759c7;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.logo span {
+    color: #0c9b72;
+}
+
+.main {
+    max-width: 440px;
+    margin: 45px auto;
+    padding: 0 16px;
+}
+
+.card {
+    background: white;
+    padding: 28px;
+    border-radius: 15px;
+    box-shadow: 0 8px 35px #0f172a0c;
+    border: 1px solid #e2e8f0;
+}
+
+h1 {
+    font-size: 27px;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.tabs {
+    display: flex;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 9px;
+    margin-bottom: 24px;
+}
+
+.tab {
+    width: 50%;
+    border: none;
+    padding: 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+    background: transparent;
+    color: #64748b;
+}
+
+.tab.active {
+    background: #0759c7;
+    color: white;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 17px;
+    font-size: 15px;
+}
+
+input:focus {
+    outline: 2px solid #bfdbfe;
+    border-color: #0759c7;
+}
+
+.checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin-bottom: 18px;
+    font-size: 12px;
+    color: #475569;
+}
+
+.checkbox-row input {
+    width: auto;
+    margin: 3px 0 0;
+}
+
+.checkbox-row label {
+    font-weight: normal;
+    line-height: 1.5;
+}
+
+.primary-button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    background: #0759c7;
+    color: white;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.primary-button:hover {
+    background: #063d91;
+}
+
+.message {
+    display: none;
+    padding: 12px;
+    margin-bottom: 16px;
+    border-radius: 7px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.message.error {
+    display: block;
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.message.info {
+    display: block;
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.small-text {
+    text-align: center;
+    margin-top: 20px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.small-text a {
+    color: #0759c7;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.back {
+    display: block;
+    text-align: center;
+    margin-top: 22px;
+    color: #0759c7;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.hidden {
+    display: none;
+}
+
+.disclaimer {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 18px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+@media(max-width: 480px) {
+    .main {
+        margin: 25px auto;
+    }
+
+    .card {
+        padding: 22px 18px;
+    }
+}
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "firebase/app": "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js",
+    "firebase/auth": "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js"
+  }
+}
+</script>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <a class="logo" href="index.html">
+            OneSeva <span>India</span>
+        </a>
+    </div>
+</header>
+
+<main class="main">
+
+<div class="card">
+
+    <h1 id="pageTitle">Welcome Back!</h1>
+
+    <p class="subtitle" id="pageSubtitle">
+        Login to access your OneSeva India account.
+    </p>
+
+    <div class="tabs">
+
+        <button class="tab active"
+                id="loginTab"
+                type="button"
+                onclick="showLogin()">
+            Login
+        </button>
+
+        <button class="tab"
+                id="registerTab"
+                type="button"
+                onclick="showRegister()">
+            Register
+        </button>
+
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <!-- LOGIN FORM -->
+
+    <form id="loginForm">
+
+        <label for="loginMobile">Mobile Number</label>
+
+        <input
+            type="tel"
+            id="loginMobile"
+            inputmode="numeric"
+            pattern="[0-9]{10}"
+            maxlength="10"
+            placeholder="Enter 10-digit mobile number"
+            required
+        >
+
+        <label for="loginPassword">Password</label>
+
+        <input
+            type="password"
+            id="loginPassword"
+            minlength="8"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+        >
+
+        <button class="primary-button" type="submit">
+            Login to Account
+        </button>
+
+        <p class="small-text">
+            <a href="#" onclick="showRecovery(event)">
+                Forgot Password?
+            </a>
+        </p>
+
+    </form>
+
+    <!-- REGISTRATION FORM -->
+
+    <form id="registerForm" class="hidden">
+
+        <label for="fullName">Full Name</label>
+
+        <input
+            type="text"
+            id="fullName"
+            maxlength="100"
+            placeholder="Enter your full name"
+            autocomplete="name"
+            required
+        >
+
+        <label for="registerMobile">Mobile Number</label>
+
+        <input
+            type="tel"
+            id="registerMobile"
+            inputmode="numeric"
+            pattern="[0-9]{10}"
+            maxlength="10"
+            placeholder="Enter 10-digit mobile number"
+            autocomplete="tel-national"
+            required
+        >
+
+        <label for="registerEmail">Email Address (Optional)</label>
+
+        <input
+            type="email"
+            id="registerEmail"
+            maxlength="254"
+            placeholder="Enter your email address"
+            autocomplete="email"
+        >
+
+        <label for="registerPassword">Create Password</label>
+
+        <input
+            type="password"
+            id="registerPassword"
+            minlength="8"
+            maxlength="128"
+            placeholder="Minimum 8 characters"
+            autocomplete="new-password"
+            required
+        >
+
+        <label for="confirmPassword">Confirm Password</label>
+
+        <input
+            type="password"
+            id="confirmPassword"
+            minlength="8"
+            maxlength="128"
+            placeholder="Re-enter your password"
+            autocomplete="new-password"
+            required
+        >
+
+        <div class="checkbox-row">
+
+            <input type="checkbox" id="acceptTerms" required>
+
+            <label for="acceptTerms">
+                I accept the Terms of Service and Privacy Policy.
+                I understand that service availability and fees
+                will be disclosed before an application is submitted.
+            </label>
+
+        </div>
+
+        <button class="primary-button" type="submit">
+            Create My Account
+        </button>
+
+    </form>
+
+    <a href="index.html" class="back">
+        ← Back to Home
+    </a>
+
+    <p class="disclaimer">
+        OneSeva India is an independent service platform.
+        This demonstration does not create a real account.
+    </p>
+
+</div>
+
+</main>
+
+<script>
+const loginForm = document.getElementById("loginForm");
+const registerForm = document.getElementById("registerForm");
+const loginTab = document.getElementById("loginTab");
+const registerTab = document.getElementById("registerTab");
+const message = document.getElementById("message");
+
+function showMessage(text, type = "info") {
+    message.textContent = text;
+    message.className = "message " + type;
+}
+
+function clearMessage() {
+    message.textContent = "";
+    message.className = "message";
+}
+
+function showLogin() {
+
+    loginForm.classList.remove("hidden");
+    registerForm.classList.add("hidden");
+
+    loginTab.classList.add("active");
+    registerTab.classList.remove("active");
+
+    document.getElementById("pageTitle").textContent =
+        "Welcome Back!";
+
+    document.getElementById("pageSubtitle").textContent =
+        "Login to access your OneSeva India account.";
+
+    clearMessage();
+}
+
+function showRegister() {
+
+    registerForm.classList.remove("hidden");
+    loginForm.classList.add("hidden");
+
+    registerTab.classList.add("active");
+    loginTab.classList.remove("active");
+
+    document.getElementById("pageTitle").textContent =
+        "Create Account";
+
+    document.getElementById("pageSubtitle").textContent =
+        "Register to access available online services.";
+
+    clearMessage();
+}
+
+function showRecovery(event) {
+
+    event.preventDefault();
+
+    showMessage(
+        "Password recovery will be enabled after secure backend " +
+        "authentication is configured. No password has been changed.",
+        "info"
+    );
+}
+
+registerForm.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const name = document.getElementById("fullName").value.trim();
+    const mobile = document.getElementById("registerMobile").value.trim();
+    const password = document.getElementById("registerPassword").value;
+    const confirm = document.getElementById("confirmPassword").value;
+
+    if (name.length < 2) {
+        showMessage("Please enter your full name.", "error");
+        return;
+    }
+
+    if (!/^[0-9]{10}$/.test(mobile)) {
+        showMessage("Enter a valid 10-digit mobile number.", "error");
+        return;
+    }
+
+    if (password.length < 8) {
+        showMessage("Password must contain at least 8 characters.", "error");
+        return;
+    }
+
+    if (password !== confirm) {
+        showMessage("Passwords do not match.", "error");
+        return;
+    }
+
+    if (!document.getElementById("acceptTerms").checked) {
+        showMessage("Please accept the terms before continuing.", "error");
+        return;
+    }
+
+    showMessage(
+        "Form validation successful! Real account registration is not " +
+        "connected yet. The next step is to connect a secure backend.",
+        "info"
+    );
+
+});
+
+loginForm.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const mobile = document.getElementById("loginMobile").value.trim();
+    const password = document.getElementById("loginPassword").value;
+
+    if (!/^[0-9]{10}$/.test(mobile)) {
+        showMessage("Enter a valid 10-digit mobile number.", "error");
+        return;
+    }
+
+    if (password.length < 8) {
+        showMessage("Please enter your password.", "error");
+        return;
+    }
+
+    showMessage(
+        "Login interface is working, but real authentication " +
+        "has not been connected yet.",
+        "info"
+    );
+
+
+        });
+
+</script>
+
+</body>
+</html>
