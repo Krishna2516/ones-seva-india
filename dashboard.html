@@ -3,376 +3,746 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Customer Dashboard | OneSeva India</title>
+<title>OneSeva India - Customer Dashboard</title>
+
 <style>
-:root{--blue:#155eef;--dark:#101828;--muted:#667085;--bg:#f5f7fb;--white:#fff;--border:#eaecf0;--green:#039855;--orange:#dc6803}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:var(--bg);color:var(--dark)}
-button,input,select{font:inherit}
-button,a{-webkit-tap-highlight-color:transparent}
-a{text-decoration:none;color:inherit}
-.layout{display:flex;min-height:100vh}
-.sidebar{width:250px;background:#fff;border-right:1px solid var(--border);padding:24px 16px;position:fixed;top:0;bottom:0;left:0;overflow-y:auto;z-index:20}
-.brand{font-size:23px;font-weight:bold;color:var(--blue);padding:0 10px;display:block;margin-bottom:35px}
-.brand span{color:var(--green)}
-.menu-label{color:#98a2b3;font-size:11px;font-weight:bold;margin:20px 10px 10px;letter-spacing:1px}
-.menu a,.menu button{display:flex;align-items:center;gap:12px;width:100%;padding:13px 12px;margin-bottom:5px;border:0;background:transparent;border-radius:8px;text-align:left;color:#475467;font-size:14px;cursor:pointer}
-.menu a.active,.menu a:hover,.menu button:hover{background:#eff4ff;color:var(--blue)}
-.icon{font-size:19px;width:23px;text-align:center}
-.sidebar-bottom{border-top:1px solid var(--border);margin-top:30px;padding-top:20px}
-.main{margin-left:250px;width:calc(100% - 250px);min-width:0}
-.topbar{height:75px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 30px;gap:15px}
-.topbar h2{font-size:20px}
-.top-actions{display:flex;align-items:center;gap:18px}
-.notification{border:1px solid var(--border);border-radius:9px;padding:10px;background:#fff;cursor:pointer}
-.avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#dbeafe;color:var(--blue);font-weight:bold}
-.content{max-width:1500px;margin:auto;padding:30px}
-.welcome{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:25px}
-.welcome h1{font-size:27px;margin-bottom:8px}
-.welcome p{color:var(--muted);font-size:14px}
-.btn{display:inline-block;padding:12px 17px;background:var(--blue);color:#fff;border:0;border-radius:8px;font-weight:bold;cursor:pointer;font-size:13px}
-.btn:hover{background:#004eeb}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-bottom:28px}
-.stat-card{padding:22px;background:#fff;border:1px solid var(--border);border-radius:12px;min-width:0}
-.stat-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:18px}
-.stat-icon{width:43px;height:43px;border-radius:10px;background:#eff4ff;display:flex;align-items:center;justify-content:center;font-size:22px}
-.stat-card h3{font-size:28px;margin-bottom:6px}
-.stat-card p{font-size:13px;color:var(--muted)}
-.section{background:#fff;border:1px solid var(--border);border-radius:12px;padding:23px;margin-bottom:25px;min-width:0}
-.section-header{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:20px}
-.section-header h2{font-size:18px}
-.text-link{color:var(--blue);font-size:13px;font-weight:bold;cursor:pointer;border:0;background:transparent}
-.services{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
-.service{border:1px solid var(--border);border-radius:10px;padding:18px}
-.service-icon{width:43px;height:43px;background:#eff4ff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
-.service h3{font-size:15px;margin-bottom:7px}
-.service p{color:var(--muted);font-size:12px;line-height:1.6;margin-bottom:15px}
-.service button{width:100%;background:#eff4ff;color:var(--blue);border:0;padding:10px;border-radius:7px;font-weight:bold;cursor:pointer;font-size:12px}
-.service button:hover{background:#dbeafe}
-.search,.field{width:100%;max-width:420px;border:1px solid var(--border);border-radius:8px;padding:11px 12px;margin-bottom:14px;outline-color:var(--blue);background:#fff}
-.table-wrap{width:100%;overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:580px}
-th,td{text-align:left;padding:15px 12px;border-bottom:1px solid var(--border);font-size:13px}
-th{color:var(--muted);font-weight:bold;background:#f9fafb}
-.status{display:inline-block;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:bold;background:#fef0c7;color:#93370d}
-.status.green{background:#dcfae6;color:#05603a}
-.status.blue{background:#dbeafe;color:#1d4ed8}
-.empty{text-align:center;padding:35px 15px;color:var(--muted);font-size:14px}
-.notice{background:#fffaeb;color:#93370d;border:1px solid #fedf89;padding:16px;border-radius:9px;font-size:13px;line-height:1.6;margin-bottom:25px}
-.footer{text-align:center;color:var(--muted);padding:15px;font-size:12px}
-.mobile-menu{display:none;background:#fff;border:1px solid var(--border);border-radius:7px;padding:8px 11px;cursor:pointer;font-size:20px}
-.overlay{display:none}
-.page[hidden]{display:none!important}
-.payment-methods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}
-.method{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:white;text-align:left}
-.method.selected{border:2px solid var(--blue);background:#eff4ff}
-.qr-box{text-align:center;border:1px dashed #98a2b3;border-radius:12px;padding:20px;margin:15px 0}
-.qr-box img{width:220px;max-width:100%;height:auto;margin:12px auto;display:block}
-.small{font-size:12px;color:var(--muted);line-height:1.6}
-.form-label{display:block;font-size:13px;font-weight:bold;margin:10px 0 6px}
-.payment-summary{background:#f9fafb;border-radius:9px;padding:14px;margin:12px 0}
-.form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.danger-note{color:#b42318;font-size:12px;line-height:1.5;margin-top:10px}
-@media(max-width:1100px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.services{grid-template-columns:repeat(2,minmax(0,1fr))}.content{padding:22px}}
-@media(max-width:700px){.sidebar{transform:translateX(-100%);transition:transform .25s;box-shadow:none}.sidebar.open{transform:translateX(0);box-shadow:0 0 30px #00000020}.overlay.show{display:block;position:fixed;inset:0;background:#10182866;z-index:15}.main{margin-left:0;width:100%}.topbar{height:65px;padding:0 15px}.topbar h2{font-size:17px}.mobile-menu{display:block}.top-actions{gap:8px}.content{padding:20px 14px}.welcome{align-items:flex-start;flex-direction:column}.welcome h1{font-size:24px}.stats{gap:12px}.stat-card{padding:15px}.stat-card h3{font-size:25px}.services{grid-template-columns:1fr}.section{padding:17px 13px}.payment-methods{grid-template-columns:1fr}}
-@media(max-width:370px){.stats{grid-template-columns:1fr}}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f3f6fb;
+    color: #202938;
+}
+
+header {
+    background: #123b75;
+    color: white;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+header h2 {
+    font-size: 22px;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    margin-left: 12px;
+}
+
+.layout {
+    display: flex;
+    min-height: calc(100vh - 60px);
+}
+
+.sidebar {
+    width: 220px;
+    background: white;
+    padding: 18px 12px;
+    border-right: 1px solid #ddd;
+}
+
+.sidebar button {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 7px;
+    border: none;
+    background: transparent;
+    text-align: left;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.sidebar button:hover,
+.sidebar button.active {
+    background: #e7efff;
+    color: #123b75;
+}
+
+main {
+    flex: 1;
+    padding: 22px;
+    min-width: 0;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+h1 {
+    margin-bottom: 18px;
+    font-size: 25px;
+}
+
+h3 {
+    margin-bottom: 12px;
+}
+
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 8px #0000000b;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #1764bd;
+}
+
+.stat p {
+    color: #687386;
+    margin-bottom: 8px;
+}
+
+.stat h2 {
+    color: #123b75;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0 14px;
+    border: 1px solid #cbd3df;
+    border-radius: 6px;
+    background: white;
+    font-size: 15px;
+}
+
+label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.btn {
+    background: #1764bd;
+    color: white;
+    padding: 11px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn:hover {
+    background: #104b91;
+}
+
+.btn.secondary {
+    background: #64748b;
+}
+
+.btn.danger {
+    background: #c62828;
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 15px;
+}
+
+.service {
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid #e0e6ef;
+}
+
+.service p {
+    margin: 10px 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 8px;
+    border-radius: 5px;
+    background: #fff0c2;
+    color: #785600;
+    font-size: 12px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background: #edf3fb;
+}
+
+.small {
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.notice {
+    padding: 12px;
+    background: #fff5d9;
+    border-left: 4px solid #e5a000;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    line-height: 1.5;
+}
+
+#message {
+    display: none;
+    background: #dcfce7;
+    color: #166534;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+footer {
+    padding: 18px;
+    text-align: center;
+    color: #64748b;
+    font-size: 13px;
+}
+
+@media (max-width: 650px) {
+    .layout {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+        border-right: none;
+    }
+
+    .sidebar button {
+        margin: 0;
+        font-size: 13px;
+        padding: 11px 8px;
+    }
+
+    main {
+        padding: 14px;
+    }
+
+    header h2 {
+        font-size: 19px;
+    }
+}
 </style>
 </head>
+
 <body>
-<div class="layout">
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
-<aside class="sidebar" id="sidebar">
-<a class="brand" href="index.html">OneSeva <span>India</span></a>
-<div class="menu-label">MAIN MENU</div>
-<nav class="menu">
-<a href="#overview" class="active" onclick="showPage('overview',this)"><span class="icon">â–¦</span> Dashboard</a>
-<a href="#services" onclick="showPage('services',this)"><span class="icon">â–¤</span> Apply for Services</a>
-<a href="#applications" onclick="showPage('applications',this)"><span class="icon">ðŸ“‹</span> My Applications</a>
-<a href="#payments" onclick="showPage('payments',this)"><span class="icon">â‚¹</span> Payments</a>
-<a href="#notifications" onclick="showPage('notifications',this)"><span class="icon">â™§</span> Notifications</a>
-</nav>
-<div class="menu-label">ACCOUNT</div>
-<nav class="menu">
-<a href="#profile" onclick="showPage('profile',this)"><span class="icon">ðŸ‘¤</span> My Profile</a>
-<a href="#support" onclick="showPage('support',this)"><span class="icon">ðŸ’¬</span> Help & Support</a>
-</nav>
-<div class="sidebar-bottom menu">
-<a href="index.html"><span class="icon">âŒ‚</span> Back to Website</a>
-<button onclick="logout()"><span class="icon">â†ª</span> Logout</button>
-</div>
-</aside>
-<main class="main">
-<header class="topbar">
-<div style="display:flex;align-items:center;gap:12px">
-<button class="mobile-menu" onclick="toggleMenu()">â˜°</button>
-<h2 id="topTitle">Customer Dashboard</h2>
-</div>
-<div class="top-actions">
-<button class="notification" onclick="showPage('notifications')" aria-label="Notifications">ðŸ””</button>
-<div class="avatar" id="avatar">C</div>
-</div>
+
+<header>
+    <h2>OneSeva India</h2>
+    <div>
+        <a href="index.html">Home</a>
+        <a href="auth.html">Login</a>
+    </div>
 </header>
-<div class="content">
-<section id="page-overview" class="page">
-<div class="welcome">
-<div><h1>Hello, <span id="customerName">Customer</span> ðŸ‘‹</h1><p>Welcome to your OneSeva India dashboard.</p></div>
-<button class="btn" onclick="showPage('services')">+ Apply for Service</button>
-</div>
-<div class="notice"><strong>Important:</strong> This is a front-end demo. Applications and payment requests are saved only in this browser on this device. A secure backend is required for real customer/admin syncing and automatic payment verification.</div>
-<div class="stats">
-<div class="stat-card"><div class="stat-top"><p>Total Applications</p><div class="stat-icon">ðŸ“‹</div></div><h3 id="totalCount">0</h3><p>All your applications</p></div>
-<div class="stat-card"><div class="stat-top"><p>In Processing</p><div class="stat-icon">â³</div></div><h3 id="processingCount">0</h3><p>Currently being processed</p></div>
-<div class="stat-card"><div class="stat-top"><p>Payment Pending</p><div class="stat-icon">â‚¹</div></div><h3 id="pendingCount">0</h3><p>Awaiting verification</p></div>
-<div class="stat-card"><div class="stat-top"><p>Completed</p><div class="stat-icon">âœ…</div></div><h3 id="completedCount">0</h3><p>Completed service requests</p></div>
-</div>
-<section class="section">
-<div class="section-header"><h2>Popular Services</h2><button class="text-link" onclick="showPage('services')">View All Services â†’</button></div>
-<div class="services" id="popularServices"></div>
-</section>
-<section class="section">
-<div class="section-header"><h2>Recent Applications</h2><button class="text-link" onclick="showPage('applications')">View All â†’</button></div>
-<div id="recentApplications" class="empty">You have no applications yet.<br><br>Select a service to get started.</div>
-</section>
-</section>
-<section id="page-services" class="page" hidden>
-<div class="welcome"><div><h1>Available Services</h1><p>Choose a service to begin your application.</p></div></div>
-<input class="search" id="serviceSearch" placeholder="Search services..." oninput="filterServices()">
-<div class="section"><div class="services" id="allServices"></div></div>
-</section>
-<section id="page-applications" class="page" hidden>
-<div class="welcome"><div><h1>My Applications</h1><p>Review your application history and progress.</p></div></div>
-<div class="section"><div id="applicationsTable" class="empty">You have no applications yet.</div></div>
-</section>
 
-<section id="page-payments" class="page" hidden>
-<div class="welcome"><div><h1>Payments</h1><p>Choose a payment option for your service application.</p></div></div>
-<div class="notice">UPI payments are not automatically verified. After paying, submit your transaction reference and wait for the shop/admin to confirm it.</div>
-<div class="section">
-<h2>Payment Options</h2>
-<div class="payment-methods">
-<button class="method selected" id="cashMethod" onclick="chooseMethod('cash')"><strong>ðŸ’µ Cash at Shop</strong><p class="small">Pay in person at the OneSeva India shop.</p></button>
-<button class="method" id="upiMethod" onclick="chooseMethod('upi')"><strong>ðŸ“± UPI / Paytm QR</strong><p class="small">Scan a QR code using any UPI app.</p></button>
-</div>
-<div id="paymentForm">
-<label class="form-label" for="paymentApplication">Select application</label>
-<select class="field" id="paymentApplication"></select>
-<label class="form-label" for="paymentAmount">Service fee (â‚¹)</label>
-<input class="field" id="paymentAmount" type="number" min="1" step="1" placeholder="Enter fee amount">
-<div id="cashInstructions" class="payment-summary">
-<strong>Cash at Shop selected</strong>
-<p class="small">Submit the request below. Your payment status will remain pending until it is confirmed by the shop.</p>
-</div>
-<div id="upiInstructions" hidden>
-<div class="qr-box">
-<p><strong>Scan to pay using UPI</strong></p>
-<img id="upiQr" alt="UPI payment QR code">
-<p><strong id="upiText">k781305@ptyes</strong></p>
-<p class="small">Check the recipient name in your UPI app before paying. If the ID or recipient is incorrect, do not proceed.</p>
-</div>
-<label class="form-label" for="transactionId">UPI transaction ID / UTR</label>
-<input class="field" id="transactionId" placeholder="Enter transaction reference after paying">
-<label class="form-label" for="paymentProof">Payment screenshot (optional)</label>
-<input class="field" id="paymentProof" type="file" accept="image/*">
-<p class="small">The screenshot is only a reference and does not prove that payment was received.</p>
-</div>
-<div class="form-actions"><button class="btn" onclick="submitPayment()">Submit payment request</button></div>
-<p id="paymentMessage" class="small" role="status" style="margin-top:14px"></p>
-</div>
-</div>
-<div class="section">
-<div class="section-header"><h2>Payment History</h2></div>
-<div id="paymentHistory" class="empty">No payment requests yet.</div>
-</div>
-</section>
+<div class="layout">
 
-<section id="page-notifications" class="page" hidden>
-<div class="welcome"><div><h1>Notifications</h1><p>Updates about your service requests.</p></div></div>
-<div class="section">
-<div class="empty">You don't have any notifications yet.</div>
-</div>
-</section>
+    <aside class="sidebar">
+        <button class="active" data-section="overview"> Overview</button>
+        <button data-section="services"> Services</button>
+        <button data-section="applications"> My Applications</button>
+        <button data-section="payments"> Payments</button>
+        <button data-section="notifications"> Notifications</button>
+        <button data-section="profile"> My Profile</button>
+        <button data-section="support"> Support</button>
+    </aside>
 
-<section id="page-profile" class="page" hidden>
-<div class="welcome"><div><h1>My Profile</h1><p>Manage your contact information.</p></div></div>
-<div class="section">
-<label class="form-label" for="profileName">Full name</label>
-<input class="field" id="profileName" type="text" maxlength="80" placeholder="Enter your name">
-<label class="form-label" for="profileMobile">Mobile number</label>
-<input class="field" id="profileMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number">
-<div><button class="btn" onclick="saveProfile()">Save Profile</button></div>
-<p class="small" style="margin-top:12px">This demo saves your profile only on this device.</p>
-</div>
-</section>
+    <main>
+        <div id="message"></div>
 
-<section id="page-support" class="page" hidden>
-<div class="welcome"><div><h1>Help & Support</h1><p>Need help with a service request?</p></div></div>
-<div class="section">
-<p>Contact OneSeva India for assistance with your application.</p>
-<p style="margin-top:12px">Please keep your application ID ready when asking about a request.</p>
-</div>
-</section>
+        <section id="overview" class="section active">
+            <h1>Customer Dashboard</h1>
 
+            <div class="card">
+                <h3>Welcome to OneSeva India!</h3>
+                <p class="small">
+                    Apply for online services, view your demo application records,
+                    and check their current status here.
+                </p>
+            </div>
+
+            <div class="grid">
+                <div class="stat">
+                    <p>Total Applications</p>
+                    <h2 id="totalApplications">0</h2>
+                </div>
+                <div class="stat">
+                    <p>Pending Applications</p>
+                    <h2 id="pendingApplications">0</h2>
+                </div>
+                <div class="stat">
+                    <p>Completed Applications</p>
+                    <h2 id="completedApplications">0</h2>
+                </div>
+                <div class="stat">
+                    <p>Payment Records</p>
+                    <h2 id="totalPayments">0</h2>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Quick Actions</h3>
+                <button class="btn" onclick="showSection('services')">
+                    Apply for Service
+                </button>
+                <button class="btn secondary" onclick="showSection('applications')">
+                    Track Application
+                </button>
+            </div>
+
+            <div class="notice">
+                <strong>Important:</strong> This is currently a frontend demo.
+                Applications are stored only in this browser and are not
+                automatically sent to the shop administrator.
+            </div>
+        </section>
+
+        <section id="services" class="section">
+            <h1>Available Services</h1>
+
+            <div class="notice">
+                These are sample service names and fees. Confirm the actual
+                service requirements and charges with the shop before publishing.
+            </div>
+
+            <div class="service-grid" id="serviceList"></div>
+        </section>
+
+        <section id="apply" class="section">
+            <h1>Apply for Service</h1>
+
+            <div class="card">
+                <form id="applicationForm">
+
+                    <label>Selected Service</label>
+                    <input id="serviceName" readonly required>
+
+                    <label>Full Name</label>
+                    <input id="customerName" required maxlength="100"
+                           placeholder="Enter your full name">
+
+                    <label>Mobile Number</label>
+                    <input id="customerMobile" type="tel"
+                           pattern="[0-9]{10}" maxlength="10"
+                           placeholder="10-digit mobile number" required>
+
+                    <label>Required Details</label>
+                    <textarea id="applicationDetails" rows="3"
+                              placeholder="Enter relevant application details"
+                              required></textarea>
+
+                    <label>Upload Documents</label>
+                    <input id="documents" type="file" multiple
+                           accept=".pdf,.jpg,.jpeg,.png">
+
+                    <p class="small">
+                        Demo only: selected files are not uploaded to a server.
+                        Do not upload sensitive documents to this demo.
+                    </p>
+
+                    <label>Payment Method</label>
+                    <select id="paymentMethod" required>
+                        <option value="Cash at Shop">Cash at Shop</option>
+                        <option value="UPI">UPI</option>
+                    </select>
+
+                    <div id="upiBox" style="display:none;">
+                        <p><strong>UPI ID:</strong> k781305@ptyes</p>
+                        <p class="small">
+                            Verify this UPI ID before making any payment.
+                            Payment is not automatically verified by this demo.
+                        </p>
+                        <label>UPI Transaction ID (optional)</label>
+                        <input id="transactionId"
+                               placeholder="Enter transaction ID">
+                    </div>
+
+                    <button class="btn" type="submit">Submit Demo Application</button>
+                    <button class="btn secondary" type="button"
+                            onclick="showSection('services')">Cancel</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="applications" class="section">
+            <h1>My Applications</h1>
+
+            <div class="card table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Application ID</th>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Fee</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="applicationTable"></tbody>
+                </table>
+                <p id="noApplications" class="small">
+                    No applications yet.
+                </p>
+            </div>
+        </section>
+
+        <section id="payments" class="section">
+            <h1>Payment Records</h1>
+
+            <div class="notice">
+                Payment records shown here are not proof of successful payment.
+                Verify UPI payments separately before processing an application.
+            </div>
+
+            <div class="card table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Application ID</th>
+                            <th>Amount</th>
+                            <th>Method</th>
+                            <th>Transaction ID</th>
+                            <th>Payment Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentTable"></tbody>
+                </table>
+                <p id="noPayments" class="small">No payment records yet.</p>
+            </div>
+        </section>
+
+        <section id="notifications" class="section">
+            <h1>Notifications</h1>
+            <div class="card">
+                <p>No new notifications.</p>
+                <p class="small">
+                    Real notifications require a connected backend or messaging service.
+                </p>
+            </div>
+        </section>
+
+        <section id="profile" class="section">
+            <h1>My Profile</h1>
+
+            <div class="card">
+                <form id="profileForm">
+                    <label>Full Name</label>
+                    <input id="profileName" maxlength="100"
+                           placeholder="Enter your name">
+
+                    <label>Mobile Number</label>
+                    <input id="profileMobile" type="tel" maxlength="10"
+                           pattern="[0-9]{10}"
+                           placeholder="10-digit mobile number">
+
+                    <label>Email (optional)</label>
+                    <input id="profileEmail" type="email"
+                           placeholder="Enter email address">
+
+                    <button class="btn" type="submit">Save Demo Profile</button>
+                </form>
+
+                <p class="small" style="margin-top:12px;">
+                    Profile details are stored only in this browser.
+                </p>
+            </div>
+        </section>
+
+        <section id="support" class="section">
+            <h1>Customer Support</h1>
+
+            <div class="card">
+                <h3>Need Help?</h3>
+                <p class="small">
+                    Contact your OneSeva India service shop for application
+                    assistance, document requirements, fees, or payment questions.
+                </p>
+
+                <label>Describe Your Question</label>
+                <textarea id="supportMessage" rows="4"
+                          placeholder="Write your question"></textarea>
+
+                <button class="btn" onclick="sendSupport()">
+                    Save Support Request
+                </button>
+
+                <p class="small" style="margin-top:10px;">
+                    Demo only: this request is not sent to an administrator.
+                </p>
+            </div>
+        </section>
+
+    </main>
 </div>
-<footer class="footer">Â© 2026 OneSeva India Â· Customer Portal</footer>
-</main>
-</div>
+
+<footer>
+    � 2026 OneSeva India | Customer Portal Demo
+</footer>
+
 <script>
-const UPI_ID = "k781305@ptyes";
+const STORAGE_KEY = "onesSevaApplications";
+const PROFILE_KEY = "onesSevaProfile";
+const SUPPORT_KEY = "onesSevaSupport";
 
 const services = [
-{name:"Income Certificate",icon:"ðŸ“„",fee:100,desc:"Income certificate application assistance."},
-{name:"Permanent Residence Certificate",icon:"ðŸ ",fee:150,desc:"Residence certificate assistance."},
-{name:"SC Certificate",icon:"ðŸ“‹",fee:100,desc:"Certificate application assistance."},
-{name:"OBC Certificate",icon:"ðŸªª",fee:100,desc:"Certificate application assistance."},
-{name:"PAN Card Services",icon:"ðŸ’³",fee:150,desc:"New PAN and correction assistance."},
-{name:"Voter ID Services",icon:"ðŸ—³ï¸",fee:100,desc:"Eligible voter registration assistance."},
-{name:"Assam e-District",icon:"ðŸ¢",fee:100,desc:"Assistance through permitted processes."},
-{name:"Seva Setu Assistance",icon:"ðŸŒ",fee:100,desc:"Assistance with eligible services."},
-{name:"Certificate Download",icon:"ðŸ“¥",fee:50,desc:"Assistance with eligible issued certificates."}
+    { name: "PAN Card Apply", fee: 100 },
+    { name: "PAN Card Correction", fee: 150 },
+    { name: "Voter ID Services", fee: 100 },
+    { name: "Income Certificate", fee: 100 },
+    { name: "SC Certificate", fee: 100 },
+    { name: "Other Online Service", fee: 100 }
 ];
 
-let selectedMethod = "cash";
-
-const read = key => {
+function getApplications() {
     try {
-        return JSON.parse(localStorage.getItem(key) || "[]");
-    } catch (e) {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
         return [];
     }
-};
-
-const write = (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value));
-};
-
-function escapeHtml(s) {
-    return String(s ?? "").replace(/[&<>"']/g, c => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-    }[c]));
 }
+
+function saveApplications(applications) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(applications));
+}
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function(char) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[char];
+    });
+}
+
+function showMessage(message) {
+    const box = document.getElementById("message");
+    box.textContent = message;
+    box.style.display = "block";
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    setTimeout(function() {
+        box.style.display = "none";
+    }, 4000);
+}
+
+function showSection(sectionId) {
+    document.querySelectorAll(".section").forEach(function(section) {
+        section.classList.remove("active");
+    });
+
+    const selected = document.getElementById(sectionId);
+
+    if (selected) {
+        selected.classList.add("active");
+    }
+
+    document.querySelectorAll(".sidebar button").forEach(function(button) {
+        button.classList.toggle(
+            "active",
+            button.dataset.section === sectionId
+        );
+    });
+
+    if (sectionId === "overview") renderOverview();
+    if (sectionId === "applications") renderApplications();
+    if (sectionId === "payments") renderPayments();
+}
+
+document.querySelectorAll(".sidebar button").forEach(function(button) {
+    button.addEventListener("click", function() {
+        showSection(button.dataset.section);
+    });
+});
 
 function renderServices() {
-    const card = s => `
-        <div class="service" data-name="${escapeHtml(s.name.toLowerCase())}">
-            <div class="service-icon">${s.icon}</div>
-            <h3>${escapeHtml(s.name)}</h3>
-            <p>${escapeHtml(s.desc)}<br>
-            <strong>Service fee: â‚¹${s.fee} (demo amount)</strong></p>
-            <button onclick="selectService('${s.name.replace(/'/g, "\\'")}')">
-                Apply Now â†’
-            </button>
-        </div>`;
+    const container = document.getElementById("serviceList");
 
-    document.getElementById("allServices").innerHTML =
-        services.map(card).join("");
-
-    document.getElementById("popularServices").innerHTML =
-        services.slice(0, 3).map(card).join("");
+    container.innerHTML = services.map(function(service) {
+        return `
+            <div class="service">
+                <h3>${escapeHTML(service.name)}</h3>
+                <p>Sample service fee: ${service.fee}</p>
+                <button class="btn"
+                    onclick="startApplication('${escapeHTML(service.name)}', ${service.fee})">
+                    Apply Now
+                </button>
+            </div>
+        `;
+    }).join("");
 }
 
-function showPage(name, el) {
-    document.querySelectorAll(".page").forEach(p => p.hidden = true);
+function startApplication(name, fee) {
+    document.getElementById("serviceName").value = name;
+    document.getElementById("applicationForm").dataset.fee = fee;
+    document.getElementById("transactionId").value = "";
+    document.getElementById("paymentMethod").value = "Cash at Shop";
+    document.getElementById("upiBox").style.display = "none";
+    showSection("apply");
+}
 
-    const target = document.getElementById("page-" + name);
-    if (target) target.hidden = false;
+document.getElementById("paymentMethod").addEventListener("change", function() {
+    document.getElementById("upiBox").style.display =
+        this.value === "UPI" ? "block" : "none";
+});
 
-    document.querySelectorAll(".menu a").forEach(a =>
-        a.classList.remove("active")
-    );
+document.getElementById("applicationForm").addEventListener("submit", function(event) {
+    event.preventDefault();
 
-    if (el) {
-        el.classList.add("active");
-    } else {
-        const link = document.querySelector(`.menu a[href="#${name}"]`);
-        if (link) link.classList.add("active");
+    const name = document.getElementById("customerName").value.trim();
+    const mobile = document.getElementById("customerMobile").value.trim();
+    const service = document.getElementById("serviceName").value;
+    const details = document.getElementById("applicationDetails").value.trim();
+    const paymentMethod = document.getElementById("paymentMethod").value;
+    const transactionId = document.getElementById("transactionId").value.trim();
+    const fee = Number(this.dataset.fee || 0);
+    const files = document.getElementById("documents").files;
+
+    if (!/^[0-9]{10}$/.test(mobile)) {
+        showMessage("Please enter a valid 10-digit mobile number.");
+        return;
     }
 
-    const titles = {
-        overview: "Customer Dashboard",
-        services: "Apply for Services",
-        applications: "My Applications",
-        payments: "Payments",
-        notifications: "Notifications",
-        profile: "My Profile",
-        support: "Help & Support"
+    if (files.length > 10) {
+        showMessage("Please select no more than 10 files.");
+        return;
+    }
+
+    const allowedTypes = [
+        "application/pdf",
+        "image/jpeg",
+        "image/png"
+    ];
+
+    for (const file of files) {
+        if (!allowedTypes.includes(file.type)) {
+            showMessage("Only PDF, JPG and PNG files are allowed.");
+            return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+            showMessage("Each file must be 5 MB or smaller.");
+            return;
+        }
+    }
+
+    const applications = getApplications();
+
+    const application = {
+        id: "OSI" + Date.now().toString().slice(-8),
+        name: name,
+        mobile: mobile,
+        service: service,
+        details: details,
+        fee: fee,
+        date: new Date().toLocaleDateString("en-IN"),
+        status: "Submitted - Demo",
+        paymentMethod: paymentMethod,
+        transactionId: paymentMethod === "UPI" ? transactionId : "",
+        paymentStatus: "Not Verified",
+        documentNames: Array.from(files).map(function(file) {
+            return file.name;
+        })
     };
 
-    document.getElementById("topTitle").textContent =
-        titles[name] || "Customer Dashboard";
+    applications.unshift(application);
 
-    document.getElementById("sidebar").classList.remove("open");
-    document.getElementById("overlay").classList.remove("show");
-
-    if (name === "payments") {
-        refreshPaymentSelect();
-        renderPayments();
+    try {
+        saveApplications(applications);
+    } catch (error) {
+        showMessage("Could not save application. Browser storage may be full.");
+        return;
     }
 
-    if (name === "applications") {
-        renderApplications();
-    }
+    this.reset();
+    document.getElementById("upiBox").style.display = "none";
+
+    renderOverview();
+    renderApplications();
+    renderPayments();
+
+    showMessage("Demo application saved. ID: " + application.id);
+    showSection("applications");
+});
+
+function renderOverview() {
+    const applications = getApplications();
+
+    document.getElementById("totalApplications").textContent =
+        applications.length;
+
+    document.getElementById("pendingApplications").textContent =
+        applications.filter(function(app) {
+            return app.status !== "Completed";
+        }).length;
+
+    document.getElementById("completedApplications").textContent =
+        applications.filter(function(app) {
+            return app.status === "Completed";
+        }).length;
+
+    document.getElementById("totalPayments").textContent =
+        applications.length;
 }
 
-function toggleMenu() {
-    document.getElementById("sidebar").classList.toggle("open");
-    document.getElementById("overlay").classList.toggle("show");
-}
+function renderApplications() {
+    const applications = getApplications();
+    const table = document.getElementById("applicationTable");
+    const empty = document.getElementById("noApplications");
 
-function selectService(name) {
-    const apps = read("ones seva applications");
-    const id = "OS" + Date.now().toString().slice(-8);
-    const service = services.find(s => s.name === name) || {fee: 100};
+    empty.style.display = applications.length ? "none" : "block";
 
-    apps.unshift({
-        id,
-        name,
-        fee: service.fee,
-        status: "Application request saved on this device",
-        paymentStatus: "Payment pending",
-        created: new Date().toLocaleString()
-    });
-
-    write("ones seva applications", apps);
-    refreshDashboard();
-    showPage("payments");
-
-    document.getElementById("paymentApplication").value = id;
-    document.getElementById("paymentAmount").value = service.fee;
-
-    document.getElementById("paymentMessage").textContent =
-        "Application request saved on this device. Submit your payment method below.";
-}
-
-function filterServices() {
-    const q = document.getElementById("serviceSearch").value.toLowerCase();
-
-    document.querySelectorAll("#allServices .service").forEach(c => {
-        c.style.display = c.dataset.name.includes(q) ? "" : "none";
-    });
-}
-
-function chooseMethod(method) {
-    selectedMethod = method;
-
-    document.getElementById("cashMethod").classList.toggle(
-        "selected", method === "cash"
-    );
-
-    document.getElementById("upiMethod").classList.toggle(
-        "selected", method === "upi"
-    );
-
-    document.getElementById("cashInstructions").hidden = method !== "cash";
-    document.getElementById("upiInstructions").hidden = method !== "upi";
-    document.getElementById("paymentMessage").textContent = "";
-
-    if (method === "upi") makeQr();
-}
-
-function makeQr() {
-    const appId = document.getElementById("paymentApplication").value;
-    const amount = Number(document.getElemen
+    table.innerHTML = applications.map(function(app) {
+        return `
+           
